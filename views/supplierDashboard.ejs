@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Welcome <%= currUser.name %></h1>
+  <a href="/api/logout">Logout</a>
+
+  <!-- Navbar -->
+  <nav>
+    <a id="navPurchase" class="active">Purchase Cylinders</a>
+    <a id="navReturn">Return Blank Cylinders</a>
+  </nav>
+
+  <!-- Purchase Form -->
+  <form id="purchaseForm">
+    <label for="cylinders">Number of cylinders</label>
+    <input type="number" id="cylinders" name="cylinders" required min="0">
+    <button type="submit">Submit Purchase</button>
+  </form>
+
+  <!--  Return Form (hidden initially) -->
+  <form id="returnForm" style="display:none;">
+    <label for="blankCylinders">Number of blank cylinders to return</label>
+    <input type="number" id="blankCylinders" name="blankCylinders" required min="0">
+    <button type="submit">Submit Return</button>
+  </form>
+
+  <p id="msg"></p>
+
+  <h2>My Orders</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Cylinders</th>
+        <th>Blank Cylinders Returned</th>
+        <th>Admin Status</th>
+        <th>Supplier Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="myOrder"></tbody>
+  </table>
+    <script src="/js/supplier.js"></script>
+</body>
+</html>

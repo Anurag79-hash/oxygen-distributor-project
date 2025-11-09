@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supplier Dashboard</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+  <div class="dashboard-container">
+    <h2 class="page-title">Supplier Management</h2>
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Search supplier by name..."></div>
+      <div class="table-container">
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Email</th><th>Mobile Number</th></tr>
+    </thead>
+    <tbody id="supplierTable"></tbody>
+  </table>
+ </div>
+  <div id="pagination">
+    <button id="prevBtn">Prev</button>
+    <span id="pageInfo"></span>
+    <button id="nextBtn">Next</button>
+  </div>
+
+  <div class="details" id="supplierDetails" style="display:none;"></div>
+  </div>
+  <%- include("partials/footer") %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

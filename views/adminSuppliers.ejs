@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <div class="dashboard-container">
+    <form id="editForm">
+  <input type="text" name="name" value="<%= supplier.name %>">
+  <input type="email" name="email" value="<%= supplier.email %>">
+  <input type="password" name="password" placeholder="New password (optional)">
+  <button type="submit">Update</button>
+</form>
+
+<button id="deleteBtn">Delete Supplier</button>
+</div>
+<script>
+document.getElementById('editForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target).entries());
+  const res = await fetch(`/admin/api/suppliers/update/<%= supplier._id %>`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  const json = await res.json();
+  alert(json.message);
+});
+
+document.getElementById('deleteBtn').addEventListener('click', async () => {
+  if (!confirm("Delete this supplier?")) return;
+  const res = await fetch(`/admin/api/suppliers/delete/<%= supplier._id %>`, {
+    method: 'DELETE'
+  });
+  const json = await res.json();
+  alert(json.message);
+  if (json.success) window.location.href = '/admin/dashboard';
+});
+</script>
+
+</body>
+</html>

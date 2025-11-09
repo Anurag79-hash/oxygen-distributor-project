@@ -1,0 +1,32 @@
+<header class="navbar">
+  <div class="logo">Oxygen Cylinder Portal</div>
+  <div class="menu-toggle" id="menu-toggle">☰</div>
+
+  <nav class="nav-links" id="nav-links">
+    <% if (currUser) { %>
+      <% if (currUser.role === 'admin') { %>
+        <a href="/admin/dashboard">Dashboard</a>
+        <a href="/admin/supplierDetail">Suppliers Detail</a>
+      <% } else if (currUser.role === 'supplier') { %>
+        <a href="/supplier/dashboard">Dashboard</a>
+        <a href="/supplier/orders">My Orders</a>
+      <% } %>
+      <span class="welcome">Welcome, <%= currUser.name %> (<%= currUser.role %>)</span>
+      <a href="/api/logout">Logout</a>
+    <% } else { %>
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    <% } %>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const links = document.getElementById('nav-links');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      links.classList.toggle('active');
+    });
+  }
+</script>

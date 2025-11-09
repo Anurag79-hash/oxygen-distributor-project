@@ -1,0 +1,154 @@
+/* 🌐 Oxygen Cylinder Supply Dashboard Styles */
+
+/* Reset + Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  color: #333;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Oxygen bubble animation */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle, rgba(0,150,136,0.15) 20%, transparent 70%);
+  animation: bubbles 15s infinite linear;
+  z-index: -1;
+}
+@keyframes bubbles {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 -1000px; }
+}
+
+/* Header */
+h3, h4 {
+  color: #00695c;
+  margin: 20px 0 10px;
+  text-align: center;
+  animation: fadeInDown 1s ease;
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Search Bar */
+#search {
+  width: 90%;
+  max-width: 400px;
+  display: block;
+  margin: 15px auto;
+  padding: 10px 14px;
+  border: 2px solid #26a69a;
+  border-radius: 25px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+#search:focus {
+  border-color: #00796b;
+  box-shadow: 0 0 10px rgba(0, 150, 136, 0.5);
+  transform: scale(1.05);
+}
+
+/* Table */
+#supplierTable, #supplierDetail table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px auto;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+#supplierTable th, #supplierTable td,
+#supplierDetail th, #supplierDetail td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+#supplierTable tr:hover, #supplierDetail tr:hover {
+  background: #e0f2f1;
+  transition: background 0.3s ease;
+}
+#supplierTable th, #supplierDetail th {
+  background: #004d40;
+  color: #fff;
+}
+
+/* Buttons */
+button, #prevBtn, #nextBtn {
+  background: #26a69a;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  margin: 10px 5px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+button:hover, #prevBtn:hover, #nextBtn:hover {
+  background: #00796b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Supplier Links */
+.supplier-link {
+  color: #0288d1;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+.supplier-link:hover {
+  color: #01579b;
+  text-decoration: underline;
+}
+
+/* Detail Container */
+#supplierDetail {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 900px;
+  background: #ffffffcc;
+  border: 1px solid #b2dfdb;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  animation: fadeInUp 0.8s ease;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Page Info */
+#pageInfo {
+  font-weight: bold;
+  margin: 10px 0;
+  text-align: center;
+  color: #004d40;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #supplierTable, #supplierDetail table {
+    font-size: 14px;
+  }
+  #supplierTable th, #supplierTable td,
+  #supplierDetail th, #supplierDetail td {
+    padding: 8px;
+  }
+  button, #prevBtn, #nextBtn {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
