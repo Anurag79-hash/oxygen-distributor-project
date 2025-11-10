@@ -44,7 +44,17 @@ app.get('/',(req,res)=>{
 
 app.use((req,res,next)=>{
   res.status(404).send("404 - Page not Found");
+});
+app.use((req,res,next)=>{
+  res.header("Cache-Control","no-cache,no-store,must-revalidate");
+  res.header("Pragma","no-cache");
+  res.header("Expires","0");
+  next();
 })
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => app.listen(process.env.PORT || 5000, () => console.log('Server running')))
-  .catch(err => console.error(err));
+app.listen(process.env.PORT,()=>{
+  console.log(`Server running of port ${process.env.PORT}`);
+  connectMongo();
+})
+function connectMongo(){
+  mongoose.connect(process.env.MONGO_URI).then(()=>console.log("MongoDB Connected")).catch(err=>console.log("Mongo Error",err))
+}

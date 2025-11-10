@@ -3,7 +3,7 @@ console.log("Admin Dashboard Loaded");
 let currentPage = 1;
 let totalPages = 1;
 const limit = 5;
-
+window.history.forward();
 const supplierTable = document.getElementById('supplierTable');
 const pageInfo = document.getElementById("pageInfo");
 const searchInput = document.getElementById("search");

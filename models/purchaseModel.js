@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 
 const purchaseSchema = new mongoose.Schema({
-  orderId: { type: String, default: () => uuidv4() },
+  orderId: { type: String, default: () =>`USER-${uuidv4().split('-')[0].toUpperCase()}` },
   supplierId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true  },
   supplierName: String,
   cylinders: Number,

@@ -9,7 +9,8 @@
         <a href="/admin/supplierDetail">Suppliers Detail</a>
       <% } else if (currUser.role === 'supplier') { %>
         <a href="/supplier/dashboard">Dashboard</a>
-        <a href="/supplier/orders">My Orders</a>
+         <a id="navPurchase" class="active">Purchase Cylinders</a>
+        <a id="navReturn">Return Blank Cylinders</a>
       <% } %>
       <span class="welcome">Welcome, <%= currUser.name %> (<%= currUser.role %>)</span>
       <a href="/api/logout">Logout</a>
@@ -29,4 +30,11 @@
       links.classList.toggle('active');
     });
   }
+    document.querySelectorAll('#nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (links.classList.contains('active')) {
+        links.classList.remove('active');
+      }
+    });
+  });
 </script>

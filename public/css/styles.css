@@ -30,13 +30,16 @@ body::before {
 .dashboard-container ,.subcontainer{
   position: relative;
   z-index: 1;
+  width:100%;
   max-width: 1100px;
+  overflow-x:hidden;
   margin: 100px auto 80px auto;
   padding: 30px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 20px;
+  text-align: center;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 .navbar{
@@ -114,7 +117,7 @@ body::before {
   color:red;
 }
 .subcontainer{
-  width:55%;
+  width:60%;
   background-color:rgb(89, 240, 240);
   padding:5%;
   text-align: center;
@@ -134,5 +137,216 @@ button{
   cursor: pointer;
   color:white;
   font-weight: bold;
+  width:80%;
+  max-width:700px;
   background-color:rgb(94, 94, 233);
+}
+#search,.amount{
+ width:80%;
+ max-width:700px;
+ padding:5px;
+ border:2px solid rgb(12, 241, 211);
+ border-radius:10px;
+ margin:15px 0;
+}
+#pagination button{
+  width:auto;
+  background-color: rgb(247, 105, 11);
+}
+table{
+  width:100%;
+  margin:0 auto;
+  border-collapse: collapse;
+  border: 2px solid #4CAF50;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  table-layout:fixed;
+}
+th,td{
+  border:1px solid #ddd;
+  padding:12px;
+  text-align: center;
+  word-wrap: break-word;
+}
+#navReturn, #navPurchase{
+  cursor: pointer;
+}
+th{
+  background:linear-gradient(45deg,#4CAF50,#2e8b57);
+  text-transform: uppercase;
+}
+tr:nth-child(even){
+  background-color:hsl(219, 81%, 59%);
+}
+@media(max-width:600px){
+  table{
+    width: 100%;
+  }
+  th,td{
+    padding: 10px 8px;
+    font-size:14px;
+  }
+}
+.welcome{
+  color:rgb(6, 224, 206);
+  background-color: rgb(90, 12, 216);
+  padding:5px;
+  border-radius:5px;
+}
+
+/* Hero Section */
+.hero {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px;
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 1100px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  padding: 40px 30px;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: #e8f0f2;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  margin: 0 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn.primary {
+  background-color: #0078D7;
+  color: #fff;
+  margin-top:5px;
+}
+
+.btn.primary:hover {
+  background-color: #005fa3;
+}
+
+.btn.secondary {
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+}
+
+.btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Features Section */
+.features {
+  width: 100%;
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.features h2 {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 25px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+}
+
+.feature {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.feature h3 {
+  color: #4af0f0;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  color: #e6f9ff;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* CTA Section */
+.cta {
+  width: 100%;
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 50px 20px;
+  background: rgba(0, 120, 215, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.cta h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.cta p {
+  color: #d9f3ff;
+  margin-bottom: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-content, .features, .cta {
+    padding: 25px 20px;
+    margin: 60px 15px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .features h2, .cta h2 {
+    font-size: 1.6rem;
+  }
+
+  .btn {
+    margin: 8px 5px;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+  }
 }
