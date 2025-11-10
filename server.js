@@ -51,7 +51,7 @@ app.use((req,res,next)=>{
   res.header("Expires","0");
   next();
 })
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT||10000,()=>{
   console.log(`Server running of port ${process.env.PORT}`);
   connectMongo();
 })
