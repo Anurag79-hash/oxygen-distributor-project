@@ -211,6 +211,10 @@ async function loadSupplierDetail(supplierId) {
         <thead>
           <tr>
             <th>Order ID</th>
+            <th>Challan No.</th>
+            <th>ECR No.</th>
+             <th>GasType</th>
+            <th>Subcategory</th>
             <th>Cylinders</th>
             <th>Returned</th>
             <th>Admin Status</th>
@@ -224,6 +228,10 @@ async function loadSupplierDetail(supplierId) {
             ? purchases.map(p => `
               <tr>
                 <td>${p.orderId}</td>
+                 <td>${p.challanNo || '-'}</td>
+                 <td>${p.ecrNo || '-'}</td>
+                    <td>${p.gasType || '-'}</td>
+                <td>${p.subcategory}</td>
                 <td>${p.cylinders}</td>
                 <td>${p.blankCylindersReturned}</td>
                 <td>${p.adminStatus}</td>
@@ -248,7 +256,7 @@ function generatePDF(order) {
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.text("Oxygen Cylinder Purchase Receipt", 150, 50);
+  doc.text("Cylinder Purchase Receipt", 150, 50);
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(12);
@@ -257,13 +265,9 @@ function generatePDF(order) {
   const lineGap = 25;
 
   const fields = [
-    ["Order ID", order.orderId],
-    ["Cylinders Purchased", order.cylinders],
-    ["Cylinders Returned", order.blankCylindersReturned],
-    ["Admin Status", order.adminStatus],
-    ["Supplier Status", order.supplierStatus],
-    ["Created Date", new Date(order.createdAt).toLocaleString('en-IN')],
-    
+  ["Order ID", order.orderId], ["Challan No", order.challanNo || '-'], 
+   ["ECR No", order.ecrNo || '-'],
+  ["Gas Type", order.gasType || '-'], ["Subcategory", order.subcategory || '-'], ["Cylinders Purchased", order.cylinders], ["Cylinders Returned", order.blankCylindersReturned], ["Admin Status", order.adminStatus], ["Supplier Status", order.supplierStatus], ["Created Date", new Date(order.createdAt).toLocaleString('en-IN')],
   ];
 
   fields.forEach(([label, value]) => {

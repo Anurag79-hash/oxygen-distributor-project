@@ -28,15 +28,47 @@
       msg.textContent = '';
     });
 
+    function toggleOtherInput(selectId, inputId, labelId) {
+  const select = document.getElementById(selectId);
+  const input = document.getElementById(inputId);
+  const label = document.getElementById(labelId);
+  select.addEventListener('change', () => {
+    if (select.value === 'Other') {
+      input.style.display = 'block';
+      label.style.display = 'block';
+    } else {
+      input.style.display = 'none';
+      label.style.display = 'none';
+      input.value = '';
+    }
+  });
+}
+toggleOtherInput('purchaseGasType', 'purchaseManualGas', 'purchaseManualGasLabel');
+toggleOtherInput('purchaseSubcategory', 'purchaseManualSub', 'purchaseManualSubLabel');
+toggleOtherInput('returnGasType', 'returnManualGas', 'returnManualGasLabel');
+toggleOtherInput('returnSubcategory', 'returnManualSub', 'returnManualSubLabel');
+
     // ✅ Purchase form submit
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const cylinders = document.getElementById('cylinders').value;
+        let gasType = document.getElementById('purchaseGasType').value;
+  let subcategory = document.getElementById('purchaseSubcategory').value;
+  if (gasType === 'Other') {
+    gasType = document.getElementById('purchaseManualGas').value.trim();
+  }
+  if (subcategory === 'Other') {
+    subcategory = document.getElementById('purchaseManualSub').value.trim();
+  }
+   if (!gasType || !subcategory) {
+    msg.textContent = "Please fill all required fields.";
+    return;
+  }
       try {
         const res = await fetch('/supplier/purchase', {
           method: 'POST',
           headers: { "Content-Type": 'application/json' },
-          body: JSON.stringify({ cylinders })
+          body: JSON.stringify({ cylinders,gasType , subcategory })
         });
         const data = await res.json();
         msg.textContent = data.message;
@@ -58,11 +90,24 @@ myOrders.addEventListener('click', e => {
     returnForm.addEventListener('submit', async e => {
       e.preventDefault();
       const blankCylinders = document.getElementById('blankCylinders').value;
+      let gasType = document.getElementById('returnGasType').value;
+  let subcategory = document.getElementById('returnSubcategory').value;
+  if (gasType === 'Other') {
+    gasType = document.getElementById('returnManualGas').value.trim();
+  }
+  if (subcategory === 'Other') {
+    subcategory = document.getElementById('returnManualSub').value.trim();
+  }
+
+  if (!gasType || !subcategory) {
+    msg.textContent = "Please fill all required fields.";
+    return;
+  }
       try {
         const res = await fetch('/supplier/return', {
           method: 'POST',
           headers: { "Content-Type": 'application/json' },
-          body: JSON.stringify({ blankCylinders })
+          body: JSON.stringify({ blankCylinders , gasType,subcategory })
         });
         const data = await res.json();
         msg.textContent = data.message;
@@ -83,6 +128,8 @@ myOrders.addEventListener('click', e => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${o.orderId}</td>
+          <td>${o.gasType}</td>
+          <td>${o.subcategory}</td>
           <td>${o.cylinders}</td>
           <td>${o.blankCylindersReturned}</td>
           <td>${o.adminStatus}</td>
@@ -119,37 +166,67 @@ function generateOrderPDF(order) {
     alert("Error: jsPDF not loaded.");
     return;
   }
+
   const doc = new jsPDF({ unit: "pt", format: "a4" });
 
+  // 🔹 Heading
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
-  doc.text("Oxygen Cylinder Order Details", 150, 50);
+  doc.setFontSize(20);
+  doc.text("MURARI AIR PRODUCT", 200, 40);
 
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(14);
+  doc.text("COMPANY CYLINDER A/C", 210, 60);
+
+  // 🔹 Title
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.text(" Cylinder Order Details", 180, 100);
+
+  // 🔹 Table Content
   doc.setFont("helvetica", "normal");
   doc.setFontSize(12);
 
-  let y = 100;
-  const lineGap = 25;
-
   const fields = [
     ["Order ID", order.orderId],
+    ["Challan No", order.challanNo || '-'],
+    ["Gas Type", order.gasType || '-'],
+    ["Subcategory", order.subcategory || '-'],
     ["Cylinders Purchased", order.cylinders],
     ["Cylinders Returned", order.blankCylindersReturned],
+    ["ECR No.",order.ecrNo],
     ["Admin Status", order.adminStatus],
     ["Supplier Status", order.supplierStatus],
     ["Created Date", new Date(order.createdAt).toLocaleString('en-IN')],
   ];
 
-  fields.forEach(([label, value]) => {
-    doc.text(`${label}: ${value}`, 50, y);
-    y += lineGap;
+  // Table dimensions
+  const startX = 60;
+  const startY = 130;
+  const cellWidthLabel = 200;
+  const cellWidthValue = 300;
+  const cellHeight = 25;
+
+  // Draw table headers (optional)
+  doc.setFont("helvetica", "bold");
+  doc.rect(startX, startY, cellWidthLabel + cellWidthValue, cellHeight);
+  doc.text("Field", startX + 10, startY + 17);
+  doc.text("Value", startX + cellWidthLabel + 10, startY + 17);
+
+  // Draw rows
+  doc.setFont("helvetica", "normal");
+  fields.forEach(([label, value], index) => {
+    const y = startY + (index + 1) * cellHeight;
+    doc.rect(startX, y, cellWidthLabel, cellHeight);
+    doc.rect(startX + cellWidthLabel, y, cellWidthValue, cellHeight);
+
+    doc.text(label, startX + 10, y + 17);
+    doc.text(String(value), startX + cellWidthLabel + 10, y + 17);
   });
 
-  doc.setDrawColor(0);
-  doc.setLineWidth(0.5);
-  doc.rect(40, 70, 500, y - 70);
-
+  // Save file
   doc.save(`Order_${order.orderId}.pdf`);
 }
+
 
     loadOrders();

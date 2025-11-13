@@ -9,7 +9,6 @@ const mongoose = require("mongoose");
 exports.registerSupplier = async (req, res) => {
   try {
     const { name, email, password, phone, address } = req.body;
-    console.log(password);
     const phoneRegex=/^[0-9]\d{9}$/;
     if(!phoneRegex.test(phone)){
       return res.render('register',{success:null,error:"Invalid phone Number"});

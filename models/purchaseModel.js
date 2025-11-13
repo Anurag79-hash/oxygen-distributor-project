@@ -1,16 +1,20 @@
 const mongoose = require("mongoose");
-const { v4: uuidv4 } = require("uuid");
 
 const purchaseSchema = new mongoose.Schema({
-  orderId: { type: String, default: () =>`USER-${uuidv4().split('-')[0].toUpperCase()}` },
-  supplierId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true  },
-  supplierName: String,
-  cylinders: Number,
+  orderId: { type: String, required: true },
+  supplierId: { type: String, required: true },
+  supplierName: { type: String },
+  type: { type: String, enum: ["purchase", "return"], default: "purchase" },
+  gasType: { type: String },              
+  subcategory: { type: String },
+  cylinders: { type: Number, default: 0 },
   blankCylindersReturned: { type: Number, default: 0 },
+  challanNo: { type: String }, 
+  ecrNo: { type: String }, 
   adminStatus: { type: String, default: "pending" },
   supplierStatus: { type: String, default: "pending" },
-  adminConfirmedAt: { type: Date, default: null },
-  supplierConfirmedAt: { type: Date, default: null },
-}, { timestamps: true }); // <-- automatically adds createdAt & updatedAt
+  supplierConfirmedAt: { type: Date },
+  adminConfirmedAt: { type: Date },
+}, { timestamps: true });
 
 module.exports = mongoose.model("Purchase", purchaseSchema);

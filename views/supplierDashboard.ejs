@@ -10,17 +10,70 @@
   <%- include("partials/header") %>
 <div class="dashboard-container">
   <!-- Purchase Form -->
-  <form id="purchaseForm">
+  <form id="purchaseForm" class="uform">
     <label for="cylinders"><b>Number of Cylinders</b></label>
     <br>
-    <input type="number" placeholder="Enter Number Of Cylinder" class="amount" id="cylinders" name="cylinders" required min="0">
+    <!-- <input type="number" placeholder="Enter Number Of Cylinder" class="amount" id="cylinders" name="cylinders" required min="0"><br> -->
+    <label for="purchaseGasType"><b>Gas Type</b></label>
+      <select id="purchaseGasType" required>
+        <option value="">-- Select Gas Type --</option>
+        <option value="O2">Oxygen (O₂)</option>
+        <option value="CO2">Carbon Dioxide (CO₂)</option>
+        <option value="AR">Argon (AR)</option>
+        <option value="N2O">Nitrous Oxide (N₂O)</option>
+        <option value="N2">Nitrogen (N₂)</option>
+        <option value="Other">Other</option>
+      </select>
+      
+      <label id="purchaseManualGasLabel" style="display:none;"><b>Enter Gas Type</b></label>
+      <input type="text" id="purchaseManualGas" placeholder="Enter Gas Type" style="display:none;">
+      <label for="purchaseSubcategory"><b>Subcategory</b></label>
+      <select id="purchaseSubcategory" required>
+        <option value="">-- Select Subcategory --</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="D">D</option>
+        <option value="Other">Other</option>
+      </select>
+       <label id="purchaseManualSubLabel" style="display:none;"><b>Enter Subcategory</b></label>
+      <input type="text" id="purchaseManualSub" placeholder="Enter Subcategory" style="display:none;">
+       <label for="cylinders"><b>Number of Cylinders</b></label>
+      <input type="number" placeholder="Enter Number Of Cylinders" class="amount" id="cylinders" name="cylinders" required min="0">
+      <br>
     <button type="submit">Submit Purchase</button>
   </form>
 
   <!--  Return Form (hidden initially) -->
-  <form id="returnForm" style="display:none;">
+  <form id="returnForm" style="display:none;" class="uform">
     <label for="blankCylinders"><b>Number of Blank Cylinders to Return</b></label>
-    <br>
+  <br>
+    <label for="returnGasType"><b>Gas Type</b></label>
+  <br>
+      <select id="returnGasType" required>
+        <option value="">-- Select Gas Type --</option>
+        <option value="O2">Oxygen (O₂)</option>
+        <option value="CO2">Carbon Dioxide (CO₂)</option>
+        <option value="AR">Argon (AR)</option>
+        <option value="N2O">Nitrous Oxide (N₂O)</option>
+        <option value="N2">Nitrogen (N₂)</option>
+        <option value="Other">Other</option>
+      </select><br>
+      <center>
+       <label id="returnManualGasLabel" style="display:none;"><b>Enter Gas Type</b></label>
+      <input type="text" id="returnManualGas" placeholder="Enter Gas Type" style="display:none;"></center>
+       <label for="returnSubcategory"><b>Subcategory</b></label><br>
+      <select id="returnSubcategory" required>
+        <option value="">-- Select Subcategory --</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="D">D</option>
+        <option value="Other">Other</option>
+      </select><br>
+
+      <!-- 🔹 Manual Subcategory Input -->
+       <center>
+      <label id="returnManualSubLabel" style="display:none;"><b>Enter Subcategory</b></label><br>
+      <input type="text" id="returnManualSub" placeholder="Enter Subcategory" style="display:none;"></center><br>
     <input type="number" class="amount" placeholder="Number of Blank Cylinder to Return" id="blankCylinders" name="blankCylinders" required min="0">
     <button type="submit">Submit Return</button>
   </form>
@@ -31,13 +84,16 @@
   <table>
     <thead>
       <tr>
-        <th>Order ID</th>
-        <th>Cylinders</th>
-        <th>Blank Cylinders Returned</th>
-        <th>Admin Status</th>
-        <th>Supplier Status</th>
-        <th>Action</th>
-        <th>Download Receipt</th>
+          <th>Order ID</th>
+          <th>Gas Type</th>
+          <th>Subcategory</th>
+          <th>Cylinders</th>
+          <th>Blank Cylinders Returned</th>
+          <th>Admin Status</th>
+          <th>Supplier Status</th>
+          <th>Action</th>
+          <th><h2>&#x2B07;</h2></th>
+
       </tr>
     </thead>
     <tbody id="myOrder"></tbody>
