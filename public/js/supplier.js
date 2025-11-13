@@ -141,7 +141,7 @@ myOrders.addEventListener('click', e => {
               : '-'}
           </td>
           <td>
-        <button class="download-order-btn" data-order='${JSON.stringify(o)}'>📄 Download</button>
+        <button class="download-order-btn" data-order='${JSON.stringify(o)}'>⬇</button>
       </td>`;
         myOrders.appendChild(row);
       });

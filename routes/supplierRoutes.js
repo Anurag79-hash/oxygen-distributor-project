@@ -51,7 +51,7 @@ router.get("/myOrders", isSupplier, async (req, res) => {
   try {
     const supplierId = req.session.user?.id;
     const orders = await Purchase.find({ supplierId }).sort({ createdAt: -1 });
-
+    res.json(orders);
   } catch (err) {
     console.error("❌ Error fetching orders:", err);
     res.status(500).json({ message: "Server error" });
