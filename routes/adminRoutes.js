@@ -14,19 +14,41 @@ router.get("/api/suppliers", isAdmin, async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const search = req.query.search || "";
+
+    // Find suppliers
     const query = {
       role: "supplier",
       name: { $regex: search, $options: "i" }
     };
 
     const total = await Supplier.countDocuments(query);
-    const suppliers = await Supplier.find(query)
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .sort({ name: 1 });
+    let suppliers = await Supplier.find(query);
+
+    // For each supplier, calculate totals from Purchase or Receipt
+    const suppliersWithTotals = await Promise.all(
+      suppliers.map(async (s) => {
+        const receipt = await Receipt.findOne({ supplierId: s._id });
+        return {
+          _id: s._id,
+          name: s.name,
+          email: s.email,
+          phone: s.phone,
+          totalPurchased: receipt ? receipt.totalCylindersPurchased : 0,
+          totalReturned: receipt ? receipt.totalCylindersReturned : 0,
+          currentCylinders: receipt ? receipt.currentCylinders : 0
+        };
+      })
+    );
+
+    // Sort by totalPurchased descending (maximum purchase first)
+    suppliersWithTotals.sort((a, b) => b.totalPurchased - a.totalPurchased);
+
+    // Pagination
+    const start = (page - 1) * limit;
+    const paginatedSuppliers = suppliersWithTotals.slice(start, start + limit);
 
     res.json({
-      suppliers,
+      suppliers: paginatedSuppliers,
       total,
       page,
       pages: Math.ceil(total / limit)
@@ -36,6 +58,7 @@ router.get("/api/suppliers", isAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 
 router.get("/api/purchases", isAdmin, async (req, res) => {
@@ -84,6 +107,27 @@ router.post("/purchase/send/:id", isAdmin, async (req, res) => {
   } catch (err) {
     console.error("Error marking order as sent:", err);
     res.status(500).json({ message: "Error updating order" });
+  }
+});
+// ✅ Update Challan No and ECR No for a purchase
+router.post('/purchase/updateChallanECR/:id', isAdmin, async (req, res) => {
+  try {
+    const { challanNo, ecrNo } = req.body;
+
+    const purchase = await Purchase.findByIdAndUpdate(
+      req.params.id,
+      { challanNo, ecrNo },
+      { new: true }
+    );
+
+    if (!purchase) {
+      return res.status(404).json({ message: 'Purchase not found' });
+    }
+
+    res.json({ message: 'Challan/ECR updated successfully', purchase });
+  } catch (err) {
+    console.error('Error updating Challan/ECR:', err);
+    res.status(500).json({ message: 'Error updating purchase' });
   }
 });
 

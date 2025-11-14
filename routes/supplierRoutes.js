@@ -13,7 +13,7 @@ router.get("/dashboard", isSupplier, (req, res) => {
 // ✅ Submit new purchase (called by fetch POST)
 router.post("/purchase", isSupplier, async (req, res) => {
   try {
-    const { cylinders,gasType,subcategory } = req.body;
+    const { cylinders,gasType,subcategory, challanNo } = req.body;
     const supplierId = req.session.user?.id;
     const supplierName = req.session.user?.name;
  
@@ -22,7 +22,7 @@ router.post("/purchase", isSupplier, async (req, res) => {
      if (!cylinders || cylinders <= 0 || !gasType || !subcategory) {
       return res.status(400).json({ message: "Please provide all fields" });
     }
-      challanNo = `CH-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 90 + 10)}`;
+      // challanNo = `CH-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 90 + 10)}`;
 
 const newPurchase = new Purchase({
   orderId: "ORDER-" + uuidv4().split("-")[0].toUpperCase(),
@@ -33,7 +33,7 @@ const newPurchase = new Purchase({
   subcategory,
   cylinders,
   blankCylindersReturned: 0,
-  challanNo,
+  challanNo:challanNo,
   adminStatus: "pending",
   supplierStatus: "pending",
 });
@@ -60,7 +60,7 @@ router.get("/myOrders", isSupplier, async (req, res) => {
 // ✅ Return blank cylinders (without new purchase)
 router.post("/return", isSupplier, async (req, res) => {
   try {
-    const { blankCylinders,gasType,subcategory } = req.body;
+    const { blankCylinders,gasType,subcategory,ecrNo } = req.body;
     const supplierId = req.session.user?.id;
     const supplierName = req.session.user?.name;
 
@@ -73,7 +73,7 @@ router.post("/return", isSupplier, async (req, res) => {
     }
 
     // Create a record in Purchase for the return (so admin can track)
-    const ecrNo = `ECR-${new Date().getFullYear()}-${Date.now().toString().slice(-5)}-${Math.floor(Math.random() * 90 + 10)}`;
+    // const ecrNo = `ECR-${new Date().getFullYear()}-${Date.now().toString().slice(-5)}-${Math.floor(Math.random() * 90 + 10)}`;
 const newReturn = new Purchase({
   orderId: "RETURN-" + uuidv4().split("-")[0].toUpperCase(),
   supplierId,
@@ -83,7 +83,7 @@ const newReturn = new Purchase({
   subcategory,
   cylinders: 0,
   blankCylindersReturned: blankCylinders,
-  ecrNo,
+  ecrNo:ecrNo,
   adminStatus: "pending",
   supplierStatus: "sent",
 });

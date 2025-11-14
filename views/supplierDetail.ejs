@@ -10,12 +10,20 @@
   <%- include('partials/header') %>
   <div class="dashboard-container">
     <h2 class="page-title">Supplier Management</h2>
+    <div id="summary" class="summary-container">
+  <p>Total Purchased Cylinders: <span id="totalPurchased">0</span></p>
+  <p>Total Blank Cylinders Returned: <span id="totalReturned">0</span></p>
+  <p>Current Cylinders: <span id="currentCylinders">0</span></p>
+</div>
     <div class="search-box">
       <input type="text" id="search" placeholder="Search supplier by name..."></div>
       <div class="table-container">
   <table>
     <thead>
       <tr><th>Name</th><th>Email</th><th>Mobile Number</th>
+              <th>Total Purchased</th>
+      <th>Total Returned</th>
+      <th>Current Cylinders</th>
       <th>Edit</th></tr>
     </thead>
     <tbody id="supplierTable"></tbody>

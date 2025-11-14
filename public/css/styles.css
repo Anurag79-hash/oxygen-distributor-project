@@ -371,16 +371,33 @@ select option{
 .uform button {
   width:60%;
   max-width: 90%;
-  width:60%;
   border-radius:15px;
   padding:4px;
 }
-.uform label{
-  margin-top:10px;
+.uform input, .uform select{
+  margin-bottom:10px;
 }
 .uform button{
   width:60%;
   text-align: center;
 }
 
+.summary-container {
+  margin: 10px 0;
+  padding: 10px;
+  background: #f4f4f4;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.summary-container p {
+  margin: 5px 0;
+}
+.hidden {
+  display: none;
+}
+.box {
+  margin: auto;
+  width: 300px;
+  padding: 20px;
+}
 

@@ -2,7 +2,7 @@
     const returnForm = document.getElementById('returnForm');
     const msg = document.getElementById('msg');
     const myOrders = document.getElementById('myOrder');
-
+    const orderTable=document.getElementById("orderTable");
     const navPurchase = document.getElementById('navPurchase');
     const navReturn = document.getElementById('navReturn');
     if(window.history && window.history.pushState){
@@ -16,6 +16,8 @@
       navPurchase.classList.add('active');
       navReturn.classList.remove('active');
       form.style.display = 'block';
+      form.classList.add('uform');
+      orderTable.style.display='none';
       returnForm.style.display = 'none';
       msg.textContent = '';
     });
@@ -25,6 +27,7 @@
       navPurchase.classList.remove('active');
       returnForm.style.display = 'block';
       form.style.display = 'none';
+      orderTable.style.display='none';
       msg.textContent = '';
     });
 
@@ -76,6 +79,7 @@ toggleOtherInput('returnSubcategory', 'returnManualSub', 'returnManualSubLabel')
         loadOrders();
       } catch (err) {
         msg.textContent = "Error submitting purchase";
+        msg.style.color='red';
       }
     });
 // Handle Download PDF for individual orders
@@ -111,6 +115,7 @@ myOrders.addEventListener('click', e => {
         });
         const data = await res.json();
         msg.textContent = data.message;
+      
         returnForm.reset();
         loadOrders();
       } catch (err) {
@@ -123,7 +128,6 @@ myOrders.addEventListener('click', e => {
       const res = await fetch('/supplier/myOrders');
       const orders = await res.json();
       myOrders.innerHTML = '';
-
       orders.forEach(o => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -136,7 +140,7 @@ myOrders.addEventListener('click', e => {
           <td>${o.supplierStatus}</td>
           <td>
             ${o.adminStatus === 'sent' && o.supplierStatus === 'pending'
-              ? `<input type="number" id="return_${o._id}" placeholder="Blank Cylinders" min="0">
+              ? `
                  <button class="confirm-btn" data-id="${o._id}">Confirm Received</button>`
               : '-'}
           </td>
@@ -146,12 +150,13 @@ myOrders.addEventListener('click', e => {
         myOrders.appendChild(row);
       });
     }
-
+  //  <input type="number" id="return_${o._id}" placeholder="Blank Cylinders" min="0"></input>
     //  Handle Confirm buttons dynamically
     myOrders.addEventListener('click', async e => {
       if (e.target.classList.contains('confirm-btn')) {
         const id = e.target.dataset.id;
-        const returned = document.getElementById(`return_${id}`).value || 0;
+        // const returned = document.getElementById(`return_${id}`).value || 0;
+        const returned=0;
         await fetch(`/supplier/confirm/${id}`, {
           method: 'POST',
           headers: { "Content-Type": 'application/json' },
@@ -192,7 +197,7 @@ function generateOrderPDF(order) {
     ["Challan No", order.challanNo || '-'],
     ["Gas Type", order.gasType || '-'],
     ["Subcategory", order.subcategory || '-'],
-    ["Cylinders Purchased", order.cylinders],
+    ["Cylinders Confirmed", order.cylinders],
     ["Cylinders Returned", order.blankCylindersReturned],
     ["ECR No.",order.ecrNo],
     ["Admin Status", order.adminStatus],

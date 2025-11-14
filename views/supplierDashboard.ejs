@@ -10,11 +10,10 @@
   <%- include("partials/header") %>
 <div class="dashboard-container">
   <!-- Purchase Form -->
-  <form id="purchaseForm" class="uform">
-    <label for="cylinders"><b>Number of Cylinders</b></label>
+  <form id="purchaseForm" style="display:none">
+    <label for="cylinders"><h2>Purchase Gas Cylinders</h2></label>
     <br>
-    <!-- <input type="number" placeholder="Enter Number Of Cylinder" class="amount" id="cylinders" name="cylinders" required min="0"><br> -->
-    <label for="purchaseGasType"><b>Gas Type</b></label>
+    <label for="purchaseGasType"><b>Gas Type</b></label><br>
       <select id="purchaseGasType" required>
         <option value="">-- Select Gas Type --</option>
         <option value="O2">Oxygen (O₂)</option>
@@ -24,10 +23,9 @@
         <option value="N2">Nitrogen (N₂)</option>
         <option value="Other">Other</option>
       </select>
-      
-      <label id="purchaseManualGasLabel" style="display:none;"><b>Enter Gas Type</b></label>
-      <input type="text" id="purchaseManualGas" placeholder="Enter Gas Type" style="display:none;">
-      <label for="purchaseSubcategory"><b>Subcategory</b></label>
+      <center><label id="purchaseManualGasLabel" style="display:none;"><b>Enter Gas Type</b></label>
+      <input type="text" id="purchaseManualGas" placeholder="Enter Gas Type" style="display:none;"></center>
+      <label for="purchaseSubcategory"><b>Subcategory</b></label><br>
       <select id="purchaseSubcategory" required>
         <option value="">-- Select Subcategory --</option>
         <option value="A">A</option>
@@ -35,9 +33,9 @@
         <option value="D">D</option>
         <option value="Other">Other</option>
       </select>
-       <label id="purchaseManualSubLabel" style="display:none;"><b>Enter Subcategory</b></label>
-      <input type="text" id="purchaseManualSub" placeholder="Enter Subcategory" style="display:none;">
-       <label for="cylinders"><b>Number of Cylinders</b></label>
+       <center><label id="purchaseManualSubLabel" style="display:none;"><b>Enter Subcategory</b></label>
+      <input type="text" id="purchaseManualSub" placeholder="Enter Subcategory" style="display:none;"></center>
+       <label for="cylinders"><b>Number of Cylinders</b></label><br>
       <input type="number" placeholder="Enter Number Of Cylinders" class="amount" id="cylinders" name="cylinders" required min="0">
       <br>
     <button type="submit">Submit Purchase</button>
@@ -45,7 +43,7 @@
 
   <!--  Return Form (hidden initially) -->
   <form id="returnForm" style="display:none;" class="uform">
-    <label for="blankCylinders"><b>Number of Blank Cylinders to Return</b></label>
+    <label for="blankCylinders"><h2>Blank Cylinders Return Form</h2></label>
   <br>
     <label for="returnGasType"><b>Gas Type</b></label>
   <br>
@@ -80,9 +78,9 @@
   </form>
 
   <p id="msg"></p>
-
+ <div id="orderTable">
   <h2>My Orders</h2>
-  <table>
+  <table >
     <thead>
       <tr>
           <th>Order ID</th>
@@ -98,7 +96,7 @@
       </tr>
     </thead>
     <tbody id="myOrder"></tbody>
-  </table></div>
+  </table></div></div>
   <%- include("partials/footer") %>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 

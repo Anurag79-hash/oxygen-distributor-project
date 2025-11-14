@@ -9,8 +9,9 @@
   <body>
     <div>
     <%- include('partials/header') %>
+    
     <div class="container" >
-      <div class="subcontainer">
+      <div class="subcontainer" id="loginBox">
   <h1>Login</h1>
   
   <% if (typeof error !== 'undefined' && error) { %>
@@ -25,10 +26,54 @@
     <input type="password" name="password" placeholder="Password" required /><br>
     <button type="submit">Login</button>
   </form>
+  <!-- id="showForgot" -->
+    <p><a href="#" >Forgot Password?</a></p>
   <p>Don’t have an account? <a href="/register">Register</a></p>
 </div> 
 </div></div>
+<!-- Forgot Password Form (Step 1: Enter Email) -->
+<div id="forgotBox" class="hidden box">
+  <h2>Forgot Password</h2>
+  <form action="/api/send-otp" method="POST">
+    <input type="email" name="email" placeholder="Enter Email" required /><br>
+    <button type="submit">Send OTP</button>
+  </form>
+  <p><a href="#" id="backToLogin">Back to Login</a></p>
+</div>
+
+<!-- OTP Verification Form (Step 2: Enter OTP) -->
+<div id="otpBox" class="hidden box">
+  <h2>Verify OTP</h2>
+  <form action="/api/verify-otp" method="POST">
+    <input type="hidden" name="email" id="otpEmail">
+    <input type="text" name="otp" placeholder="Enter OTP" required /><br>
+    <button type="submit">Verify</button>
+  </form>
+</div>
+
+<!-- Reset Password Form (Step 3: Reset Password) -->
+<div id="resetBox" class="hidden box">
+  <h2>Reset Password</h2>
+  <form action="/api/reset-password-otp" method="POST">
+    <input type="hidden" name="email" id="resetEmail">
+    <input type="password" name="password" placeholder="New Password" required /><br>
+    <button type="submit">Reset Password</button>
+  </form>
+</div>
+
 <%- include('partials/footer') %>
+<script>
+  document.getElementById("showForgot").onclick = () => {
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("forgotBox").classList.remove("hidden");
+  };
+
+  document.getElementById("backToLogin").onclick = () => {
+    document.getElementById("forgotBox").classList.add("hidden");
+    document.getElementById("loginBox").classList.remove("hidden");
+  };
+</script>
+
 </body>
 </html>
 

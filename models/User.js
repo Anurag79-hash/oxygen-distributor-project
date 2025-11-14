@@ -6,7 +6,9 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   password: String,
   phone: String,
-  address: String
+  address: String,
+  resetOTP: String,
+resetOTPExpire: Date,
 });
 
 module.exports = mongoose.model('User', userSchema);
