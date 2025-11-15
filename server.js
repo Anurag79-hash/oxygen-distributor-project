@@ -23,7 +23,7 @@ app.use(session({
   resave:false,
   saveUninitialized:false,
   store:MongoStore.create({mongoUrl:process.env.MONGO_URI}),
-  cookie:{sameSite: "none",
+  cookie:{
     maxAge:1000*60*60}
 }));
 app.use((req, res, next) => {
