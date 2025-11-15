@@ -8,6 +8,95 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPage = 1;
   const limit = 10;
   let totalPages = 1;
+  const manageBtn = document.getElementById("manageStockBtn");
+  const popup = document.getElementById("stockPopup");
+  const closePopup = document.getElementById("closeStockPopup");
+
+  const stockGasType = document.getElementById("stockGasType");
+  const stockSubcategory = document.getElementById("stockSubcategory");
+  const stockQty = document.getElementById("stockQty");
+const gasSelect = document.getElementById('stockGasType');
+const customGasInput = document.getElementById('customGasType');
+
+const subSelect = document.getElementById('stockSubcategory');
+const customSubInput = document.getElementById('customSubcategory');
+  const addBtn = document.getElementById("addStockBtn");
+  const reduceBtn = document.getElementById("reduceStockBtn");
+  const stockDisplay = document.getElementById("stockDisplay");
+
+  manageBtn.addEventListener("click", loadStockUI);
+  closePopup.addEventListener("click", () => popup.style.display = "none");
+
+  async function loadStockUI() {
+    popup.style.display = "flex";
+    loadStockDisplay();
+  }
+// GAS TYPE
+gasSelect.addEventListener('change', () => {
+  if (gasSelect.value === "Other") {
+    customGasInput.style.display = "block";
+  } else {
+    customGasInput.style.display = "none";
+    customGasInput.value = "";
+  }
+});
+
+// SUBCATEGORY
+subSelect.addEventListener('change', () => {
+  if (subSelect.value === "Other") {
+    customSubInput.style.display = "block";
+  } else {
+    customSubInput.style.display = "none";
+    customSubInput.value = "";
+  }
+});
+  async function loadStockDisplay() {
+    const res = await fetch("/admin/getStock");
+    const data = await res.json();
+
+    stockDisplay.innerHTML = `
+      <table border="1" width="100%">
+        <tr><th>Gas Type</th><th>Sub</th><th>Qty</th></tr>
+        ${data.map(s => `
+          <tr>
+            <td>${s.gasType}</td>
+            <td>${s.subcategory}</td>
+            <td>${s.qty}</td>
+          </tr>
+        `).join('')}
+      </table>
+    `;
+  }
+
+  addBtn.addEventListener("click", async () => {
+    await updateStock("add");
+  });
+
+  reduceBtn.addEventListener("click", async () => {
+    await updateStock("reduce");
+  });
+
+ async function updateStock(type) {
+  const finalGasType = stockGasType.value === "Other" ? customGasInput.value.trim() : stockGasType.value;
+  const finalSubcategory = stockSubcategory.value === "Other" ? customSubInput.value.trim() : stockSubcategory.value;
+
+  const payload = {
+    gasType: finalGasType,
+    subcategory: finalSubcategory,
+    qty: Number(stockQty.value),
+    type
+  };
+
+  const res = await fetch("/admin/updateStock", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  alert(data.message);
+  loadStockDisplay();
+}
 
   function formatDate(dateStr) {
     if (!dateStr) return '';
@@ -163,6 +252,19 @@ return true;
     alert(data.message || 'Updated!');
     loadOrders(currentPage, searchInput.value);
   };
+async function checkLowStock() {
+  const res = await fetch("/admin/getStock");
+  const data = await res.json();
+
+  data.forEach(s => {
+    if (s.qty <= 10) {
+      alert(`⚠️ LOW STOCK: ${s.gasType} (${s.subcategory}) only ${s.qty} left!`);
+    }
+  });
+}
+
+// Call on page load
+checkLowStock();
 
   // Initial load
   loadOrders();

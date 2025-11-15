@@ -128,6 +128,16 @@ myOrders.addEventListener('click', e => {
       const res = await fetch('/supplier/myOrders');
       const orders = await res.json();
       myOrders.innerHTML = '';
+        if (!orders.length) {
+    myOrders.innerHTML = `
+      <tr>
+        <td colspan="9" style="text-align:center; padding:10px;">
+          📭 No orders found. Start by placing your first order!
+        </td>
+      </tr>
+    `;
+    return;
+  }
       orders.forEach(o => {
         const row = document.createElement('tr');
         row.innerHTML = `

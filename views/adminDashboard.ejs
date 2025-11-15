@@ -12,6 +12,48 @@
   <div class="dashboard-container">
   <h2>Supplier Orders</h2>
   <input type="text" id="search" placeholder="Search by Supplier name..">
+  <button id="manageStockBtn" class="btn-stock">Manage Gas Stock</button>
+
+<!-- STOCK POPUP -->
+<div id="stockPopup" class="stock-popup" style="display:none;">
+  <div class="stock-card">
+    <h2>Manage Gas Stock</h2>
+
+    <label><b>Select Gas Type</b></label>
+    <select id="stockGasType">
+      <option value="">-- Select Gas Type --</option>
+      <option value="O2">Oxygen (O₂)</option>
+      <option value="CO2">Carbon Dioxide (CO₂)</option>
+      <option value="AR">Argon (AR)</option>
+      <option value="N2O">Nitrous Oxide (N₂O)</option>
+      <option value="N2">Nitrogen (N₂)</option>
+      <option value="Other">Other</option>
+    </select>
+<input type="text" id="customGasType" placeholder="Enter Custom Gas Type" style="display:none; margin-top:8px;">
+
+    <label><b>Subcategory</b></label>
+    <select id="stockSubcategory">
+      <option value="">-- Select Subcategory --</option>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="D">D</option>
+      <option value="Other">Other</option>
+    </select>
+<input type="text" id="customSubcategory" placeholder="Enter Custom Subcategory" style="display:none; margin-top:8px;">
+
+    <label><b>Enter Quantity</b></label>
+    <input type="number" id="stockQty" placeholder="Enter Quantity" min="1">
+
+    <button id="addStockBtn">Add Stock</button>
+    <button id="reduceStockBtn">Reduce Stock</button>
+
+    <hr>
+    <button id="closeStockPopup">Close</button>
+
+    <h3>Available Stock</h3>
+    <div id="stockDisplay"></div>
+  </div>
+</div>
   <table>
     <thead>
       <tr>

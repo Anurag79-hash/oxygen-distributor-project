@@ -7,8 +7,7 @@ const Supplier = require("../models/User");
 const Purchase = require("../models/purchaseModel");
 const Receipt = require("../models/receiptModel");
 const updateReceipt = require("../utils/updateReceipt");
-
-
+const Stock = require("../models/stockModel");
 router.get("/api/suppliers", isAdmin, async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -214,5 +213,68 @@ router.delete('/api/deleteSupplier/:id', async (req, res) => {
     res.status(500).json({ message: 'Error deleting supplier' });
   }
 }); 
+
+router.get("/getStock", async (req, res) => {
+  const stock = await Stock.find();
+  res.json(stock);
+});
+
+router.post("/updateStock", async (req, res) => {
+  try {
+    // Handle custom gas type / subcategory
+    const finalGasType =
+      req.body.gasType === "Other"
+        ? req.body.customGasType
+        : req.body.gasType;
+
+    const finalSubcategory =
+      req.body.subcategory === "Other"
+        ? req.body.customSubcategory
+        : req.body.subcategory;
+
+    const qty = Number(req.body.qty);
+    const type = req.body.type;
+
+    if (!finalGasType || !finalSubcategory || !qty) {
+      return res.json({ message: "Missing required fields!" });
+    }
+
+    // Find existing stock
+    let stock = await Stock.findOne({
+      gasType: finalGasType,
+      subcategory: finalSubcategory,
+    });
+
+    // If not found → create
+    if (!stock) {
+      stock = new Stock({
+        gasType: finalGasType,
+        subcategory: finalSubcategory,
+        qty: 0,
+      });
+    }
+
+    // Add or reduce
+    if (type === "add") {
+      stock.qty += qty;
+    } else if (type === "reduce") {
+      if (stock.qty < qty)
+        return res.json({ message: "Not enough stock!" });
+
+      stock.qty -= qty;
+    }
+
+    await stock.save();
+
+    res.json({
+      message: "Stock updated successfully!",
+      stock,
+    });
+  } catch (err) {
+    console.error("Stock update error:", err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 
 module.exports = router;
