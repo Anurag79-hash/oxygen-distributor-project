@@ -3,15 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SupplierDashboard</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <%- include("partials/header") %>
 <div class="dashboard-container">
   <!-- Purchase Form -->
+   <div class="summary-container" id="summaryContainer">
+  <div class="summary-box">
+    <h3>Total Ordered</h3>
+    <p id="totalOrdered">0</p>
+  </div>
+  <div class="summary-box">
+    <h3>Total Returned</h3>
+    <p id="totalReturned">0</p>
+  </div>
+  <div class="summary-box">
+    <h3>Current Present</h3>
+    <p id="currentPresent">0</p>
+  </div>
+</div>
+<button id="viewStatusBtn" class="status-btn">View Cylinder Details</button>
+
   <form id="purchaseForm" style="display:none">
-    <label for="cylinders"><h2>Purchase Gas Cylinders</h2></label>
+    <label for="cylinders"><h2>Order Gas Cylinders</h2></label>
     <br>
     <label for="purchaseGasType"><b>Gas Type</b></label><br>
       <select id="purchaseGasType" required>
@@ -38,12 +54,12 @@
        <label for="cylinders"><b>Number of Cylinders</b></label><br>
       <input type="number" placeholder="Enter Number Of Cylinders" class="amount" id="cylinders" name="cylinders" required min="0">
       <br>
-    <button type="submit">Submit Purchase</button>
+    <button type="submit">Order Cylinder</button>
   </form>
 
   <!--  Return Form (hidden initially) -->
   <form id="returnForm" style="display:none;" class="uform">
-    <label for="blankCylinders"><h2>Blank Cylinders Return Form</h2></label>
+    <label for="blankCylinders"><h2>Empty Cylinders Return Form</h2></label>
   <br>
     <label for="returnGasType"><b>Gas Type</b></label>
   <br>
@@ -73,7 +89,7 @@
       <label id="returnManualSubLabel" style="display:none;"><b>Enter Subcategory</b></label>
       <input type="text" id="returnManualSub" placeholder="Enter Subcategory" style="display:none;"></center>
       <br>
-    <input type="number" class="amount" placeholder="Number of Blank Cylinder to Return" id="blankCylinders" name="blankCylinders" required min="0">
+    <input type="number" class="amount" placeholder="Number of Empty Cylinder to Return" id="blankCylinders" name="blankCylinders" required min="0">
     <button type="submit">Submit Return</button>
   </form>
 
@@ -86,8 +102,8 @@
           <th>Order ID</th>
           <th>Gas Type</th>
           <th>Subcategory</th>
-          <th>Cylinders</th>
-          <th>Blank Cylinders Returned</th>
+          <th>Cylinders Order</th>
+          <th>Empty Cylinders Returned</th>
           <th>Admin Status</th>
           <th>Supplier Status</th>
           <th>Action</th>
@@ -97,6 +113,26 @@
     </thead>
     <tbody id="myOrder"></tbody>
   </table></div></div>
+  <div id="statusModal" class="modal">
+  <div class="modal-content">
+    <span id="closeStatusModal" class="close">&times;</span>
+    <h2>Cylinder Status (All Over)</h2>
+
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th>Gas Type</th>
+          <th>Subcategory</th>
+          <th>Total Ordered</th>
+          <th>Total Returned</th>
+          <th>Current Present</th>
+        </tr>
+      </thead>
+      <tbody id="statusBody"></tbody>
+    </table>
+  </div>
+</div>
+
   <%- include("partials/footer") %>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 

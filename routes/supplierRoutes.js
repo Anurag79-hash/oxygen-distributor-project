@@ -196,5 +196,11 @@ router.post("/confirm/:id", isSupplier, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+router.get("/status", isSupplier, async (req, res) => {
+  const purchases = await Purchase.find();
+  const returns = await Receipt.find();
+
+  // You can merge and calculate here (if needed)
+});
 
 module.exports = router;

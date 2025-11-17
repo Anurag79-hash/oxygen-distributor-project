@@ -9,8 +9,8 @@
         <a href="/admin/supplierDetail">Suppliers Detail</a>
       <% } else if (currUser.role === 'supplier') { %>
         <a href="/supplier/dashboard">Dashboard</a>
-         <a id="navPurchase" class="active">Purchase Cylinders</a>
-        <a id="navReturn">Return Blank Cylinders</a>
+         <a id="navPurchase" class="active">Order Cylinders</a>
+        <a id="navReturn">Return Empty Cylinders</a>
       <% } %>
       <span class="welcome">Welcome, <%= currUser.name %> (<%= currUser.role %>)</span>
       <a href="/api/logout">Logout</a>

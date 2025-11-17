@@ -5,6 +5,8 @@
     const orderTable=document.getElementById("orderTable");
     const navPurchase = document.getElementById('navPurchase');
     const navReturn = document.getElementById('navReturn');
+    const summeryContainer=document.getElementById("summaryContainer");
+  
     if(window.history && window.history.pushState){
       window.history.pushState(null,null,window.location.href);
       window.onpopstate=function(){
@@ -19,6 +21,7 @@
       form.classList.add('uform');
       orderTable.style.display='none';
       returnForm.style.display = 'none';
+      summeryContainer.style.display='none';
       msg.textContent = '';
     });
 
@@ -27,6 +30,7 @@
       navPurchase.classList.remove('active');
       returnForm.style.display = 'block';
       form.style.display = 'none';
+      summeryContainer.style.display='none';
       orderTable.style.display='none';
       msg.textContent = '';
     });
@@ -78,7 +82,7 @@ toggleOtherInput('returnSubcategory', 'returnManualSub', 'returnManualSubLabel')
         form.reset();
         loadOrders();
       } catch (err) {
-        msg.textContent = "Error submitting purchase";
+        msg.textContent = "Error submitting Order";
         msg.style.color='red';
       }
     });
@@ -122,12 +126,78 @@ myOrders.addEventListener('click', e => {
         msg.textContent = "Error submitting return";
       }
     });
+function updateSummary(orders) {
+  let totalOrdered = 0;
+  let totalReturned = 0;
+
+  orders.forEach(o => {
+    if((o.supplierStatus==="confirmed"||o.supplierStatus==="sent")&& o.adminStatus==="sent"){
+    totalOrdered += o.cylinders || 0;
+    totalReturned += o.blankCylindersReturned || 0;}
+  });
+
+  document.getElementById("totalOrdered").innerText = totalOrdered;
+  document.getElementById("totalReturned").innerText = totalReturned;
+  document.getElementById("currentPresent").innerText = totalOrdered - totalReturned;
+}
+function calculateCategorySummary(orders) {
+  const map = {};
+
+  orders.forEach(o => {
+    const key = `${o.gasType}_${o.subcategory}`;
+
+    if (!map[key]) {
+      map[key] = {
+        gasType: o.gasType,
+        subcategory: o.subcategory,
+        ordered: 0,
+        returned: 0
+      };
+    }
+
+    map[key].ordered += o.cylinders || 0;
+    map[key].returned += o.blankCylindersReturned || 0;
+  });
+
+  return Object.values(map);
+}
+function showStatusTable(orders) {
+  const status = calculateCategorySummary(orders);
+  const tbody = document.getElementById("statusBody");
+
+  tbody.innerHTML = "";
+  
+  status.forEach(item => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${item.gasType}</td>
+      <td>${item.subcategory}</td>
+      <td>${item.ordered}</td>
+      <td>${item.returned}</td>
+      <td>${item.ordered - item.returned}</td>
+    `;
+    tbody.appendChild(tr);
+
+    
+  });
+
+  document.getElementById("statusModal").style.display = "flex";
+}
 
     // Load all orders
     async function loadOrders() {
       const res = await fetch('/supplier/myOrders');
       const orders = await res.json();
       myOrders.innerHTML = '';
+      updateSummary(orders);
+       document.getElementById("viewStatusBtn").onclick = () => {
+        if(orders[0].adminStatus==="sent"){
+        showStatusTable(orders);}
+        else{
+          alert("Something(Order/Return) is Pending");
+        }
+  };
         if (!orders.length) {
     myOrders.innerHTML = `
       <tr>
@@ -175,6 +245,7 @@ myOrders.addEventListener('click', e => {
         loadOrders();
       }
     });
+    
 function generateOrderPDF(order) {
   const { jsPDF } = window.jspdf || window.jspPDF || {};
   if (!jsPDF) {
@@ -207,9 +278,9 @@ function generateOrderPDF(order) {
     ["Challan No", order.challanNo || '-'],
     ["Gas Type", order.gasType || '-'],
     ["Subcategory", order.subcategory || '-'],
-    ["Cylinders Confirmed", order.cylinders],
-    ["Cylinders Returned", order.blankCylindersReturned],
-    ["ECR No.",order.ecrNo],
+    ["Cylinders Order", order.cylinders],
+    ["Blank Cylinders Returned", order.blankCylindersReturned],
+    ["ECR No.",order.ecrNo||'-'],
     ["Admin Status", order.adminStatus],
     ["Supplier Status", order.supplierStatus],
     ["Created Date", new Date(order.createdAt).toLocaleString('en-IN')],
@@ -245,3 +316,12 @@ function generateOrderPDF(order) {
 
 
     loadOrders();
+document.getElementById("closeStatusModal").onclick = () => {
+  document.getElementById("statusModal").style.display = "none";
+};
+
+window.onclick = event => {
+  if (event.target === document.getElementById("statusModal")) {
+    document.getElementById("statusModal").style.display = "none";
+  }
+};

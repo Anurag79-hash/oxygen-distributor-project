@@ -43,8 +43,8 @@ async function loadSuppliers(page = 1, search = '') {
     const summaryContainer = document.getElementById('summary');
     if (summaryContainer) {
       summaryContainer.innerHTML = `
-        <p>Total Purchased Cylinders: ${totalPurchased}</p>
-        <p>Total Blank Cylinders Returned: ${totalReturned}</p>
+        <p>Total Ordered Cylinders: ${totalPurchased}</p>
+        <p>Total Empty Cylinders Returned: ${totalReturned}</p>
         <p>Current Cylinders: ${currentCylinders}</p>
       `;
     }
@@ -187,7 +187,7 @@ async function loadSupplierDetail(supplierId) {
       ${receipt ? `
         <h4>Receipt Summary</h4>
         <ul>
-          <li>Total Cylinders Purchased: ${receipt.totalCylindersPurchased}</li>
+          <li>Total Cylinders Ordered: ${receipt.totalCylindersPurchased}</li>
           <li>Total Cylinders Returned: ${receipt.totalCylindersReturned}</li>
           <li>Current Cylinders: ${receipt.currentCylinders}</li>
           <li>Last Updated: ${new Date(receipt.lastUpdated).toLocaleString('en-IN')}</li>
@@ -204,7 +204,7 @@ async function loadSupplierDetail(supplierId) {
     })}'>📄 Download Receipt</button>
       ` : `<p>No receipt data available.</p>`}
 
-      <h4>Purchase & Return History</h4>
+      <h4>Orders & Return History</h4>
       <table border="1" cellpadding="6" cellspacing="0" width="100%">
         <thead>
           <tr>
@@ -269,7 +269,7 @@ function generatePDF(order) {
   // 🔹 Title
   doc.setFont("helvetica", "bold");
   doc.setFontSize(16);
-  doc.text("Cylinder Purchase & Return Details", 140, 100);
+  doc.text("Cylinder Orders & Return Details", 140, 100);
 
   // 🔹 Fields in table
   const fields = [
@@ -278,8 +278,8 @@ function generatePDF(order) {
     ["ECR No", order.ecrNo || "-"],
     ["Gas Type", order.gasType || "-"],
     ["Subcategory", order.subcategory || "-"],
-    ["Cylinders Recieved", order.cylinders],
-    ["Cylinders Returned", order.blankCylindersReturned],
+    ["Cylinders Order", order.cylinders],
+    ["Empty Cylinders Returned", order.blankCylindersReturned],
     ["Admin Status", order.adminStatus],
     ["Supplier Status", order.supplierStatus],
     ["Created Date", new Date(order.createdAt).toLocaleString("en-IN")]
@@ -331,8 +331,8 @@ function generateReceiptPDF(receipt) {
   const fields = [
     ["Supplier Name", receipt.supplierName],
     ["Supplier Email", receipt.supplierEmail],
-    ["Total Cylinders Purchased", receipt.totalPurchased],
-    ["Total Cylinders Returned", receipt.totalReturned],
+    ["Total Cylinders Ordered", receipt.totalPurchased],
+    ["Total Blank Cylinders Returned", receipt.totalReturned],
     ["Current Cylinders", receipt.current],
     ["Last Updated", new Date(receipt.lastUpdated).toLocaleString('en-IN')],
     ["Address", receipt.address],
