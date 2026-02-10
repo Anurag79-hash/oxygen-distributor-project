@@ -21,7 +21,7 @@ router.post("/purchase", isSupplier, async (req, res) => {
     if (!supplierId)
       return res.status(401).json({ message: "Supplier not logged in" });
      if (!cylinders || cylinders <= 0 || !gasType || !subcategory) {
-      return res.status(400).json({ message: "Please provide all fields" });
+      return res.status(400).json({ message: "please_fill_all_fields" });
     }
         const stock = await Stock.findOne({ gasType, subcategory });
 
@@ -53,7 +53,7 @@ const newPurchase = new Purchase({
 });
 
     await newPurchase.save();
-    res.json({ success: true, message: "Purchase created successfully" });
+    res.json({ success: true, message: "purchase_created" });
   } catch (err) {
     console.error("Error submitting purchase:", err);
     res.status(500).json({ message: "Error submitting purchase" });
@@ -79,10 +79,10 @@ router.post("/return", isSupplier, async (req, res) => {
     const supplierName = req.session.user?.name;
 
     if (!supplierId)
-      return res.status(401).json({ message: "Supplier not logged in" });
+      return res.status(401).json({ message: "supplier_not_logged_in" });
 
     if (!blankCylinders || blankCylinders <= 0)
-      return res.status(400).json({ message: "Enter valid cylinders" });
+      return res.status(400).json({ message: "invalid_cylinder_count" });
 
     const purchases = await Purchase.find({
       supplierId,
@@ -106,13 +106,13 @@ router.post("/return", isSupplier, async (req, res) => {
        if ( maxReturnable<=0 || blankCylinders<=0) {
       return res.json({
         success: false,
-        message: `You can return blank cylinders for ${gasType} - ${subcategory}`
+        message: `no_return_allowed ${gasType} - ${subcategory}`
       });
     }
   else  if (blankCylinders > maxReturnable) {
       return res.json({
         success: false,
-        message: `You can return only ${maxReturnable} blank cylinders for ${gasType} - ${subcategory}`
+        message: `return_limit_exceeded ${maxReturnable} blank cylinders for ${gasType} - ${subcategory}`
       });
     }
 
@@ -146,7 +146,7 @@ router.post("/return", isSupplier, async (req, res) => {
 
     res.json({
       success: true,
-      message: "Blank cylinders return submitted successfully"
+      message: "return_success"
     });
 
   } catch (err) {
@@ -165,7 +165,7 @@ router.post("/confirm/:id", isSupplier, async (req, res) => {
     const supplierId = req.session.user?.id;
     const purchase = await Purchase.findById(id);
     if (!purchase)
-      return res.status(404).json({ message: "Order not found" });
+      return res.status(404).json({ message: "order_not_found" });
     cylinders=purchase.cylinders;
     // update supplier confirmation
     purchase.supplierStatus = "confirmed";
@@ -190,7 +190,7 @@ router.post("/confirm/:id", isSupplier, async (req, res) => {
         currentCylinders: Number(cylinders),
       });
     }
-    res.json({ success: true, message: "Order confirmed successfully" });
+    res.json({ success: true, message: "order_confirmed" });
   } catch (err) {
     console.error("❌ Error confirming order:", err);
     res.status(500).json({ message: "Server error" });

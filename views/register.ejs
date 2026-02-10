@@ -10,23 +10,26 @@
   <%- include('partials/header') %>
 <div class="container">
   <div class="subcontainer">
-  <h1>Supplier Registration</h1>
+  <h1 data-i18n="supplierRegister"></h1>
   <% if (typeof error !== 'undefined' && error) { %>
-    <p class="msg error"><%= error %></p>
+    <p class="msg error" data-i18n="<%= error %>"></p>
   <% } %>
 
   <% if (typeof success !== 'undefined' && success) { %>
-    <p class="msg success"><%= success %></p>
+    <p class="msg success" data-i18n="<%= success %>"></p>
   <% } %>
   <form action="/api/register" method="POST">
-    <input type="text" name="name" placeholder="Full Name" required />
-    <input type="email" name="email" placeholder="Email" required id="email"/>
-    <input type="password" name="password" placeholder="Password" required />
-    <input type="text" name="phone" placeholder="Phone" required id="phone"/>
-    <input type="text" name="address" placeholder="Address" required />
-    <button type="submit">Register</button>
+    <input type="text" name="name" data-i18n-placeholder="fullName" required />
+    <input type="email" name="email" data-i18n-placeholder="email" required id="email"/>
+    <input type="password" name="password" data-i18n-placeholder="password" required />
+    <input type="text" name="phone" data-i18n-placeholder="phone"  required id="phone"/>
+    <input type="text" name="address" data-i18n-placeholder="address" required />
+    <button type="submit" data-i18n="registerBtn"></button>
   </form>
-  <p>Already have an account?<a href="/login"> Login</a></p>
+ <p>
+  <span data-i18n="alreadyAccount"></span>
+  <a href="/login" data-i18n="login"></a>
+</p>
 </div> </div> 
 <%- include('partials/footer') %>
 <script src="/js/main.js"></script>

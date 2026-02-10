@@ -5,20 +5,23 @@
   <nav class="nav-links" id="nav-links">
     <% if (currUser) { %>
       <% if (currUser.role === 'admin') { %>
-        <a href="/admin/dashboard">Dashboard</a>
-        <a href="/admin/supplierDetail">Suppliers Detail</a>
+        <a href="/admin/dashboard" data-i18n="nav_dashboard">Dashboard</a>
+        <a href="/admin/supplierDetail" data-i18n="nav_suppliers">Suppliers Detail</a>
       <% } else if (currUser.role === 'supplier') { %>
-        <a href="/supplier/dashboard">Dashboard</a>
-         <a id="navPurchase" class="active">Order Cylinders</a>
-        <a id="navReturn">Return Empty Cylinders</a>
+        <a href="/supplier/dashboard"  data-i18n="nav_dashboard">Dashboard</a>
+         <a id="navPurchase" class="active" data-i18n="nav_order">Order Cylinders</a>
+        <a id="navReturn"  data-i18n="nav_return">Return Empty Cylinders</a>
       <% } %>
-      <span class="welcome">Welcome, <%= currUser.name %> (<%= currUser.role %>)</span>
-      <a href="/api/logout">Logout</a>
+      <span class="welcome" >Welcome, <%= currUser.name %> (<%= currUser.role %>)</span>
+      <a href="/api/logout" data-i18n="nav_logout">Logout</a>
     <% } else { %>
-      <a href="/">Home</a>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
+      <a href="/" data-i18n="nav_home">Home</a>
+      <a href="/login" data-i18n="nav_login">Login</a>
+      <a href="/register" data-i18n="register"></a>
     <% } %>
+    
+  <button id="langSwitch" class="lang">English</button>
+
   </nav>
 </header>
 

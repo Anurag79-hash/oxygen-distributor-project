@@ -473,3 +473,15 @@ select option{
   border: 1px solid #ccc;
   text-align: center;
 }
+.lang {
+  margin: 0;
+  width:fit-content;
+  padding: 6px 10px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #ebf0ec;
+  margin-top: -5px;
+  background-color:rgb(240, 53, 7);
+}

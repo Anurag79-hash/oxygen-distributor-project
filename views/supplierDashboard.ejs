@@ -12,26 +12,26 @@
   <!-- Purchase Form -->
    <div class="summary-container" id="summaryContainer">
   <div class="summary-box">
-    <h3>Total Ordered</h3>
+    <h3 data-i18n="totalOrdered"></h3>
     <p id="totalOrdered">0</p>
   </div>
   <div class="summary-box">
-    <h3>Total Returned</h3>
+    <h3 data-i18n="totalReturned"></h3>
     <p id="totalReturned">0</p>
   </div>
   <div class="summary-box">
-    <h3>Current Present</h3>
+    <h3 data-i18n="currentCylinders"></h3>
     <p id="currentPresent">0</p>
   </div>
 </div>
-<button id="viewStatusBtn" class="status-btn">View Cylinder Details</button>
+<button id="viewStatusBtn" class="status-btn" data-i18n="viewCylinder"></button>
 
   <form id="purchaseForm" style="display:none">
-    <label for="cylinders"><h2>Order Gas Cylinders</h2></label>
+    <label for="cylinders"><h2 data-i18n="orderGasCylinders"></h2></label>
     <br>
-    <label for="purchaseGasType"><b>Gas Type</b></label><br>
+    <label for="purchaseGasType"><b data-i18n="gasType"></b></label><br>
       <select id="purchaseGasType" required>
-        <option value="">-- Select Gas Type --</option>
+        <option value="" data-i18n="selectGasType"></option>
         <option value="O2">Oxygen (O₂)</option>
         <option value="CO2">Carbon Dioxide (CO₂)</option>
         <option value="AR">Argon (AR)</option>
@@ -39,32 +39,32 @@
         <option value="N2">Nitrogen (N₂)</option>
         <option value="Other">Other</option>
       </select>
-      <center><label id="purchaseManualGasLabel" style="display:none;"><b>Enter Gas Type</b></label>
+      <center><label id="purchaseManualGasLabel" style="display:none;"><b data-i18n="enterGasType"></b></label>
       <input type="text" id="purchaseManualGas" placeholder="Enter Gas Type" style="display:none;"></center>
-      <label for="purchaseSubcategory"><b>Subcategory</b></label><br>
+      <label for="purchaseSubcategory"><b data-i18n="subcategory"></b></label><br>
       <select id="purchaseSubcategory" required>
-        <option value="">-- Select Subcategory --</option>
+        <option value="" data-i18n="selectSubcategory"></option>
         <option value="A">A</option>
         <option value="B">B</option>
         <option value="D">D</option>
         <option value="Other">Other</option>
       </select>
-       <center><label id="purchaseManualSubLabel" style="display:none;"><b>Enter Subcategory</b></label>
+       <center><label id="purchaseManualSubLabel" style="display:none;"><b data-i18n="enterSubcategory"></b></label>
       <input type="text" id="purchaseManualSub" placeholder="Enter Subcategory" style="display:none;"></center>
-       <label for="cylinders"><b>Number of Cylinders</b></label><br>
-      <input type="number" placeholder="Enter Number Of Cylinders" class="amount" id="cylinders" name="cylinders" required min="0">
+       <label for="cylinders"><b data-i18n="numberOfCylinders"></b></label><br>
+      <input type="number" data-i18n-placeholder='enterNumberOfCylinders' class="amount" id="cylinders" name="cylinders" required min="0">
       <br>
-    <button type="submit">Order Cylinder</button>
+    <button type="submit" data-i18n="orderCylinder"></button>
   </form>
 
   <!--  Return Form (hidden initially) -->
   <form id="returnForm" style="display:none;" class="uform">
-    <label for="blankCylinders"><h2>Empty Cylinders Return Form</h2></label>
+    <label for="blankCylinders"><h2 data-i18n="emptyReturnForm"></h2></label>
   <br>
-    <label for="returnGasType"><b>Gas Type</b></label>
+    <label for="returnGasType"><b data-i18n="gasType"></b></label>
   <br>
       <select id="returnGasType" required>
-        <option value="">-- Select Gas Type --</option>
+        <option value="" data-i18n="selectGasType"></option>
         <option value="O2">Oxygen (O₂)</option>
         <option value="CO2">Carbon Dioxide (CO₂)</option>
         <option value="AR">Argon (AR)</option>
@@ -73,11 +73,11 @@
         <option value="Other">Other</option>
       </select><br>
       <center>
-       <label id="returnManualGasLabel" style="display:none;"><b>Enter Gas Type</b></label>
+       <label id="returnManualGasLabel" style="display:none;"><b data-i18n="enterGasType"></b></label>
       <input type="text" id="returnManualGas" placeholder="Enter Gas Type" style="display:none;"></center>
-       <label for="returnSubcategory"><b>Subcategory</b></label><br>
+       <label for="returnSubcategory"><b data-i18n="subcategory"></b></label><br>
       <select id="returnSubcategory" required>
-        <option value="">-- Select Subcategory --</option>
+        <option value="" data-i18n="selectSubcategory"></option>
         <option value="A">A</option>
         <option value="B">B</option>
         <option value="D">D</option>
@@ -86,27 +86,27 @@
 
       <!-- 🔹 Manual Subcategory Input -->
        <center>
-      <label id="returnManualSubLabel" style="display:none;"><b>Enter Subcategory</b></label>
+      <label id="returnManualSubLabel" style="display:none;"><b data-i18n="enterSubcategory"></b></label>
       <input type="text" id="returnManualSub" placeholder="Enter Subcategory" style="display:none;"></center>
       <br>
-    <input type="number" class="amount" placeholder="Number of Empty Cylinder to Return" id="blankCylinders" name="blankCylinders" required min="0">
-    <button type="submit">Submit Return</button>
+    <input type="number" class="amount" data-i18n-placeholder="emptyCylinderReturn" id="blankCylinders" name="blankCylinders" required min="0">
+    <button type="submit" data-i18n="submitReturn"></button>
   </form>
 
   <p id="msg"></p>
  <div id="orderTable">
-  <h2>My Orders</h2>
+  <h2 data-i18n="myOrders"></h2>
   <table >
     <thead>
       <tr>
-          <th>Order ID</th>
-          <th>Gas Type</th>
-          <th>Subcategory</th>
-          <th>Cylinders Order</th>
-          <th>Empty Cylinders Returned</th>
-          <th>Admin Status</th>
-          <th>Supplier Status</th>
-          <th>Action</th>
+          <th data-i18n="orderId"></th>
+          <th data-i18n="gasType"></th>
+          <th data-i18n="subcategory"></th>
+          <th data-i18n="cylindersOrder"></th>
+          <th data-i18n="emptyReturned"></th>
+          <th data-i18n="adminStatus"></th>
+          <th data-i18n="supplierStatus"></th>
+          <th data-i18n="action"></th>
           <th>Download Receipt</th>
 
       </tr>
@@ -116,16 +116,16 @@
   <div id="statusModal" class="modal">
   <div class="modal-content">
     <span id="closeStatusModal" class="close">&times;</span>
-    <h2>Cylinder Status (All Over)</h2>
+    <h2 data-i18n="cylinderStatus"></h2>
 
     <table class="status-table">
       <thead>
         <tr>
-          <th>Gas Type</th>
-          <th>Subcategory</th>
-          <th>Total Ordered</th>
-          <th>Total Returned</th>
-          <th>Current Present</th>
+          <th data-i18n="gasType"></th>
+          <th data-i18n="subcategory"></th>
+          <th data-i18n="totalOrdered"></th>
+          <th data-i18n="totalReturned"></th>
+          <th data-i18n="currentCylinders"></th>
         </tr>
       </thead>
       <tbody id="statusBody"></tbody>

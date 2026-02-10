@@ -26,7 +26,7 @@ exports.registerSupplier = async (req, res) => {
     if (!name || !email || !password) {
       return res.render('register', { error: 'All fields are required', success: null });
     }
-    if (existing) return res.render('register',{error:"Email already registered",success:null});
+    if (existing) return res.render('register',{error:"email_exists",success:null});
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);

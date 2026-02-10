@@ -11,10 +11,10 @@
   <input type="text" name="name" value="<%= supplier.name %>">
   <input type="email" name="email" value="<%= supplier.email %>">
   <input type="password" name="password" placeholder="New password (optional)">
-  <button type="submit">Update</button>
+  <button type="submit" data-i18n="update"></button>
 </form>
 
-<button id="deleteBtn">Delete Supplier</button>
+<button id="deleteBtn" data-i18n="deleteSupplier"></button>
 </div>
 <script>
 document.getElementById('editForm').addEventListener('submit', async (e) => {

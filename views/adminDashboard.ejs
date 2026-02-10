@@ -10,16 +10,16 @@
 <body>
   <%- include('partials/header', { currUser: currUser }) %>
   <div class="dashboard-container">
-  <h2>Supplier Orders</h2>
+  <h2 data-i18n="supplierOrders"></h2>
   <input type="text" id="search" placeholder="Search by Supplier name..">
-  <button id="manageStockBtn" class="btn-stock">Manage Gas Stock</button>
+  <button id="manageStockBtn" class="btn-stock" data-i18n="manageGasStock"></button>
 
 <!-- STOCK POPUP -->
 <div id="stockPopup" class="stock-popup" style="display:none;">
   <div class="stock-card">
-    <h2>Manage Gas Stock</h2>
+    <h2 data-i18n="manageGasStock"></h2>
 
-    <label><b>Select Gas Type</b></label>
+    <label><b data-i18n="selectGasType"></b></label>
     <select id="stockGasType">
       <option value="">-- Select Gas Type --</option>
       <option value="O2">Oxygen (O₂)</option>
@@ -44,36 +44,36 @@
     <label><b>Enter Quantity</b></label>
     <input type="number" id="stockQty" placeholder="Enter Quantity" min="1">
 
-    <button id="addStockBtn">Add Stock</button>
-    <button id="reduceStockBtn">Reduce Stock</button>
+    <button id="addStockBtn" data-i18n="addStock"></button>
+    <button id="reduceStockBtn" data-i18n="reduceStock"></button>
 
     <hr>
-    <button id="closeStockPopup">Close</button>
+    <button id="closeStockPopup" data-i18n="close"></button>
 
-    <h3>Available Stock</h3>
+    <h3 data-i18n="availableStock"></h3>
     <div id="stockDisplay"></div>
   </div>
 </div>
   <table>
     <thead>
       <tr>
-        <th>Order ID</th>
-        <th>Supplier Name</th>
-        <th>Gas Type</th>
-          <th>Subcategory</th>
-        <th>Cylinders Order</th>
-        <th>Empty Cylinders Returned</th>
-        <th>Admin Status</th>
-        <th>Supplier Status</th>
-        <th>Action</th>
+        <th data-i18n="orderId"></th>
+        <th data-i18n="supplierName"></th>
+        <th data-i18n="gasType"></th>
+          <th data-i18n="subcategory"></th>
+        <th data-i18n="cylindersOrder"></th>
+        <th data-i18n="emptyReturned"></th>
+        <th data-i18n="adminStatus"></th>
+        <th data-i18n="supplierStatus"></th>
+        <th  data-i18n="action"></th>
       </tr>
     </thead>
     <tbody id="ordersTable"></tbody>
   </table>
   <div id="pagination">
-    <button id="prevBtn">Prev</button>
+    <button id="prevBtn" data-i18n="prev"></button>
     <span id="pageInfo"></span>
-    <button id="nextBtn">Next</button>
+    <button id="nextBtn" data-i18n="next"></button>
   </div>
 
 </div>
