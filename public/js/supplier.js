@@ -78,7 +78,7 @@ toggleOtherInput('returnSubcategory', 'returnManualSub', 'returnManualSubLabel')
           body: JSON.stringify({ cylinders,gasType , subcategory })
         });
         const data = await res.json();
-        msg.textContent = data.message;
+        msg.textContent = t(data.message);
         form.reset();
         loadOrders();
       } catch (err) {

@@ -473,7 +473,7 @@ select option{
   border: 1px solid #ccc;
   text-align: center;
 }
-.lang {
+#langSwitch {
   margin: 0;
   width:fit-content;
   padding: 6px 10px;
@@ -484,4 +484,8 @@ select option{
   color: #ebf0ec;
   margin-top: -5px;
   background-color:rgb(240, 53, 7);
+ /* display: none;  */
+}
+#langSwitch .active{
+  display: flex;
 }

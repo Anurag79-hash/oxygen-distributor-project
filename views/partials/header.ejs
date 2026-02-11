@@ -19,8 +19,7 @@
       <a href="/login" data-i18n="nav_login">Login</a>
       <a href="/register" data-i18n="register"></a>
     <% } %>
-    
-  <button id="langSwitch" class="lang">English</button>
+  <button id="langSwitch">English</button>
 
   </nav>
 </header>
@@ -33,7 +32,7 @@
       links.classList.toggle('active');
     });
   }
-    document.querySelectorAll('#nav-links a').forEach(link => {
+    document.querySelectorAll('#nav-links a ,  #nav-links #langSwitch').forEach(link => {
     link.addEventListener('click', () => {
       if (links.classList.contains('active')) {
         links.classList.remove('active');

@@ -10,44 +10,44 @@
     <%- include('partials/header') %>
     <section class="hero">
   <div class="hero-content">
-    <h1>Welcome to the Oxygen Cylinder Portal</h1>
-    <p>
+    <h1 data-i18n="hero_title"></h1>
+    <p data-i18n="hero_desc">
       A unified platform connecting <b>suppliers</b> and <b>administrators</b> 
       to manage oxygen cylinder purchases, returns, and inventory efficiently.
     </p>
     <div class="hero-buttons">
-      <a href="/login" class="btn primary">Login</a>
-      <a href="/register" class="btn secondary">Register</a>
+      <a href="/login" class="btn primary" data-i18n="login">Login</a>
+      <a href="/register" data-i18n="register" class="btn secondary">Register</a>
     </div>
   </div>
 </section>
 
 <section class="features">
-  <h2>Why Use This Portal?</h2>
+  <h2 data-i18n="features_title"></h2>
   <div class="feature-grid">
     <div class="feature">
-      <h3>📦 Easy Purchases</h3>
-      <p>Suppliers can easily request new oxygen cylinders from the admin dashboard.</p>
+      <h3 data-i18n="feature_purchase"></h3>
+      <p data-i18n="feature_purchase_desc"></p>
     </div>
     <div class="feature">
-      <h3>♻️ Smooth Returns</h3>
-      <p>Track and return empty cylinders with a single click using your supplier account.</p>
+      <h3 data-i18n="feature_return"></h3>
+      <p data-i18n="feature_return_desc"></p>
     </div>
     <div class="feature">
-      <h3>📊 Smart Tracking</h3>
-      <p>Admins can monitor purchases, returns, and supplier activity in real time.</p>
+      <h3 data-i18n="feature_tracking"></h3>
+      <p data-i18n="feature_tracking_desc"></p>
     </div>
     <div class="feature">
-      <h3>🔐 Secure & Transparent</h3>
-      <p>Role-based access ensures your data is always safe and clearly managed.</p>
+      <h3 data-i18n="feature_secure"></h3>
+      <p data-i18n="feature_secure_desc"></p>
     </div>
   </div>
 </section>
 
 <section class="cta">
-  <h2>Ready to Get Started?</h2>
-  <p>Join the Oxygen Cylinder Portal today and make cylinder management simple and reliable.</p>
-  <a href="/register" class="btn primary">Create Account</a>
+  <h2 data-i18n="cta_title"></h2>
+  <p data-i18n="cta_desc"></p>
+  <a href="/register" class="btn primary" data-i18n="cta_btn"></a>
 </section>
 
     <%- include('partials/footer') %>

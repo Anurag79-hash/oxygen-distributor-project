@@ -6,12 +6,12 @@ const Receipt = require("../models/receiptModel");
 const { v4: uuidv4 } = require("uuid");
 const Stock = require("../models/stockModel");
 
-// ✅ Supplier dashboard (renders the HTML page)
+// Supplier dashboard (renders the HTML page)
 router.get("/dashboard", isSupplier, (req, res) => {
   res.render("supplierDashboard", { currUser: req.session.user });
 });
 
-// ✅ Submit new purchase (called by fetch POST)
+//  Submit new purchase (called by fetch POST)
 router.post("/purchase", isSupplier, async (req, res) => {
   try {
     const { cylinders,gasType,subcategory, challanNo } = req.body;
@@ -19,7 +19,7 @@ router.post("/purchase", isSupplier, async (req, res) => {
     const supplierName = req.session.user?.name;
     
     if (!supplierId)
-      return res.status(401).json({ message: "Supplier not logged in" });
+      return res.status(401).json({ message: "supplier_not_logged_in" });
      if (!cylinders || cylinders <= 0 || !gasType || !subcategory) {
       return res.status(400).json({ message: "please_fill_all_fields" });
     }
@@ -56,7 +56,7 @@ const newPurchase = new Purchase({
     res.json({ success: true, message: "purchase_created" });
   } catch (err) {
     console.error("Error submitting purchase:", err);
-    res.status(500).json({ message: "Error submitting purchase" });
+    res.status(500).json({ message: "Error_submitting_purchase" });
   }
 });
 
@@ -68,7 +68,7 @@ router.get("/myOrders", isSupplier, async (req, res) => {
     res.json(orders);
   } catch (err) {
     console.error("❌ Error fetching orders:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server_error" });
   }
 });
 // ✅ Return blank cylinders (without new purchase)
@@ -112,7 +112,7 @@ router.post("/return", isSupplier, async (req, res) => {
   else  if (blankCylinders > maxReturnable) {
       return res.json({
         success: false,
-        message: `return_limit_exceeded ${maxReturnable} blank cylinders for ${gasType} - ${subcategory}`
+        message: `return_limit_exceeded ${maxReturnable} blank_cylinders_for ${gasType} - ${subcategory}`
       });
     }
 
@@ -151,7 +151,7 @@ router.post("/return", isSupplier, async (req, res) => {
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error while returning cylinders" });
+    res.status(500).json({ message: "Server_error_while_returning_cylinders" });
   }
 });
 
@@ -193,7 +193,7 @@ router.post("/confirm/:id", isSupplier, async (req, res) => {
     res.json({ success: true, message: "order_confirmed" });
   } catch (err) {
     console.error("❌ Error confirming order:", err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "server_error" });
   }
 });
 router.get("/status", isSupplier, async (req, res) => {
